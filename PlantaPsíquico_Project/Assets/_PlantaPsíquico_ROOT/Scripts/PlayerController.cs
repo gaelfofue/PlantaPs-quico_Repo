@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using unityEngine.InputSystem;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
