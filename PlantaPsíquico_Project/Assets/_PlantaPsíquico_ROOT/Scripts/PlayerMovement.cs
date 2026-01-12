@@ -72,7 +72,7 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         RB = GetComponent<Rigidbody2D>();
-        AnimHandler = GetComponent<PlayerAnimator>();
+       AnimHandler = GetComponent<PlayerAnimator>();
     }
 
     private void Start()
