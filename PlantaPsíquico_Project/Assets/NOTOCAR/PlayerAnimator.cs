@@ -12,7 +12,7 @@ public class PlayerAnimator : MonoBehaviour
 
     [Header("Movement Tilt")]
     [SerializeField] private float maxTilt;
-    [SerializeField][Range(0, 1)] private float tiltSpeed;
+    [SerializeField] [Range(0, 1)] private float tiltSpeed;
 
     [Header("Particle FX")]
     [SerializeField] private GameObject jumpFX;
@@ -20,7 +20,7 @@ public class PlayerAnimator : MonoBehaviour
     private ParticleSystem _jumpParticle;
     private ParticleSystem _landParticle;
 
-    public bool startedJumping { private get; set; }
+    public bool startedJumping {  private get; set; }
     public bool justLanded { private get; set; }
 
     public float currentVelY;
@@ -53,7 +53,7 @@ public class PlayerAnimator : MonoBehaviour
             tiltProgress = Mathf.InverseLerp(-mov.Data.runMaxSpeed, mov.Data.runMaxSpeed, mov.RB.linearVelocity.x);
             mult = (mov.IsFacingRight) ? 1 : -1;
         }
-
+            
         float newRot = ((tiltProgress * maxTilt * 2) - maxTilt);
         float rot = Mathf.LerpAngle(spriteRend.transform.localRotation.eulerAngles.z * mult, newRot, tiltSpeed);
         spriteRend.transform.localRotation = Quaternion.Euler(0, 0, rot * mult);
