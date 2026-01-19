@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
 
     #region COMPONENTS
     public Rigidbody2D RB { get; private set; }
-    public PlayerAnimator AnimHandler { get; private set; }
+    //public PlayerAnimator AnimHandler { get; private set; }
     #endregion
 
     #region STATE PARAMETERS
@@ -59,7 +59,7 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         RB = GetComponent<Rigidbody2D>();
-        AnimHandler = GetComponent<PlayerAnimator>();
+        //AnimHandler = GetComponent<PlayerAnimator>();
     }
 
     private void Start()
@@ -113,8 +113,8 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (LastOnGroundTime < -0.1f)
                 {
-                    if (AnimHandler != null)
-                        AnimHandler.justLanded = true;
+                    //if (AnimHandler != null)
+                        //AnimHandler.justLanded = true;
                 }
                 LastOnGroundTime = Data.coyoteTime;
             }
@@ -159,8 +159,8 @@ public class PlayerMovement : MonoBehaviour
             _isJumpFalling = false;
             Jump();
 
-            if (AnimHandler != null)
-                AnimHandler.startedJumping = true;
+            //if (AnimHandler != null)
+                //AnimHandler.startedJumping = true;
         }
         // Wall Jump
         else if (CanWallJump() && LastPressedJumpTime > 0)
