@@ -32,27 +32,19 @@ public class PsychicPlatform : MonoBehaviour
     [Tooltip("Color normal")]
     public Color normalColor = Color.white;
 
-    private Vector3 _positionA;
-    private Vector3 _positionB;
-    private Vector3 _targetPosition;
-    private Vector3 _startPosition;
+    private Vector3 nextPosition;
     private bool _isMoving = false;
-    private bool _movingToB = true;
     private float _waitTimer = 0f;
     private Vector3 _previousPosition;
     private Vector3 _velocity;
 
-    private Rigidbody2D _rb;
     private SpriteRenderer _spriteRenderer;
     private bool _isPerfectTimingWindow = false;
 
-    // Para transferir momentum automáticamente
-    private bool _playerOnPlatform = false;
     private Rigidbody2D _playerRB;
 
     private void Awake()
     {
-        _rb = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
 
         if (pointA == null || pointB == null)
@@ -62,21 +54,9 @@ public class PsychicPlatform : MonoBehaviour
             return;
         }
 
-        // Configurar Rigidbody2D si existe
-        if (_rb != null)
-        {
-            _rb.bodyType = RigidbodyType2D.Kinematic;
-            _rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
-        }
-
-        // GUARDAMOS LAS POSICIONES WORLD de A y B al inicio
-        _positionA = pointA.position;
-        _positionB = pointB.position;
-
-        // Posicionar la plataforma en el punto A al inicio
-        transform.position = _positionA;
-        _startPosition = _positionA;
-        _targetPosition = _positionB;
+        // Empezar en punto A
+        transform.position = pointA.position;
+        nextPosition = pointB.position;
         _previousPosition = transform.position;
     }
 
@@ -88,101 +68,46 @@ public class PsychicPlatform : MonoBehaviour
 
     private void Update()
     {
-        if (!_isMoving)
-        {
-            // Resetear color cuando no se mueve
-            if (_spriteRenderer != null)
-                _spriteRenderer.color = normalColor;
-            return;
-        }
-
-        // Calcular distancias
-        float distanceToTarget = Vector3.Distance(transform.position, _targetPosition);
-        float totalDistance = Vector3.Distance(_startPosition, _targetPosition);
-
-        // Calcular si estamos en la ventana de timing perfecto
-        // Ventana más generosa: basada en distancia absoluta
-        _isPerfectTimingWindow = distanceToTarget <= perfectTimingWindow;
-
-        // Feedback visual
-        if (_spriteRenderer != null)
-        {
-            _spriteRenderer.color = _isPerfectTimingWindow ? readyColor : normalColor;
-        }
-
-        // Debug visual en la consola
-        if (_isPerfectTimingWindow && !_playerOnPlatform)
-        {
-            Debug.Log($"VENTANA PERFECTA ACTIVA - Distancia al objetivo: {distanceToTarget:F2}");
-        }
-    }
-
-    private void FixedUpdate()
-    {
-        // Calcular velocidad ANTES de mover
-        _velocity = (transform.position - _previousPosition) / Time.fixedDeltaTime;
+        // Calcular velocidad
+        _velocity = (transform.position - _previousPosition) / Time.deltaTime;
+        _previousPosition = transform.position;
 
         if (_isMoving)
         {
-            // Mover la plataforma
-            Vector3 newPosition = Vector3.MoveTowards(transform.position, _targetPosition, moveSpeed * Time.fixedDeltaTime);
+            // MOVER LA PLATAFORMA (igual que el tutorial)
+            transform.position = Vector3.MoveTowards(transform.position, nextPosition, moveSpeed * Time.deltaTime);
 
-            // Usar Rigidbody si existe, sino transform
-            if (_rb != null)
+            // Calcular si estamos en la ventana de timing perfecto
+            float distanceToTarget = Vector3.Distance(transform.position, nextPosition);
+            _isPerfectTimingWindow = distanceToTarget <= perfectTimingWindow;
+
+            // Feedback visual
+            if (_spriteRenderer != null)
             {
-                _rb.MovePosition(newPosition);
-            }
-            else
-            {
-                transform.position = newPosition;
+                _spriteRenderer.color = _isPerfectTimingWindow ? readyColor : normalColor;
             }
 
-            // Verificar si llegamos al objetivo
-            if (Vector3.Distance(transform.position, _targetPosition) < 0.01f)
+            // Si llegamos al objetivo
+            if (transform.position == nextPosition)
             {
                 _isMoving = false;
                 _waitTimer = waitTime;
 
-                // Cambiar dirección
-                if (_movingToB)
-                {
-                    _startPosition = _positionB;
-                    _targetPosition = _positionA;
-                }
-                else
-                {
-                    _startPosition = _positionA;
-                    _targetPosition = _positionB;
-                }
-                _movingToB = !_movingToB;
+                // Alternar entre A y B
+                nextPosition = (nextPosition == pointA.position) ? pointB.position : pointA.position;
             }
         }
-        else if (_waitTimer > 0)
+        else
         {
-            // Manejar tiempo de espera
-            _waitTimer -= Time.fixedDeltaTime;
-        }
+            // Resetear color cuando no se mueve
+            if (_spriteRenderer != null)
+                _spriteRenderer.color = normalColor;
 
-        // Transferir momentum automáticamente al jugador si está sobre la plataforma
-        if (_playerOnPlatform && _playerRB != null && _isMoving)
-        {
-            TransferMomentumToPlayer();
-        }
-
-        _previousPosition = transform.position;
-    }
-
-    private void TransferMomentumToPlayer()
-    {
-        // Transferir velocidad de la plataforma al jugador (especialmente horizontal)
-        float momentumTransfer = 0.8f; // Qué tanto momentum se transfiere
-
-        if (Mathf.Abs(_velocity.x) > 0.1f)
-        {
-            _playerRB.linearVelocity = new Vector2(
-                Mathf.Lerp(_playerRB.linearVelocity.x, _velocity.x * momentumTransfer, 0.5f),
-                _playerRB.linearVelocity.y
-            );
+            // Countdown del timer
+            if (_waitTimer > 0)
+            {
+                _waitTimer -= Time.deltaTime;
+            }
         }
     }
 
@@ -192,17 +117,17 @@ public class PsychicPlatform : MonoBehaviour
         if (!_isMoving && _waitTimer <= 0)
         {
             _isMoving = true;
-            Debug.Log($"Plataforma activada! Moviéndose hacia {(_movingToB ? "B" : "A")}");
+            Debug.Log($"Plataforma activada!");
         }
     }
 
-    // Detectar cuando el jugador está sobre la plataforma
+    // EXACTAMENTE como el tutorial: SetParent
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            collision.gameObject.transform.parent = transform;
             _playerRB = collision.gameObject.GetComponent<Rigidbody2D>();
-            _playerOnPlatform = true;
             Debug.Log("Jugador subió a la plataforma");
         }
     }
@@ -216,7 +141,7 @@ public class PsychicPlatform : MonoBehaviour
                            Input.GetKeyDown(KeyCode.C) ||
                            Input.GetKeyDown(KeyCode.J);
 
-            // Si salta durante la ventana perfecta y la plataforma se está moviendo
+            // Si salta durante la ventana perfecta
             if (isJumping && _isPerfectTimingWindow && _isMoving && _playerRB != null)
             {
                 ApplyPerfectTimingBoost(_playerRB);
@@ -228,7 +153,7 @@ public class PsychicPlatform : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            _playerOnPlatform = false;
+            collision.gameObject.transform.parent = null;
             _playerRB = null;
             Debug.Log("Jugador salió de la plataforma");
         }
@@ -288,11 +213,6 @@ public class PsychicPlatform : MonoBehaviour
 
             // Dibujar esfera en el punto B mostrando la ventana
             Gizmos.DrawWireSphere(pointB.position, perfectTimingWindow);
-
-            if (_movingToB == false)
-            {
-                Gizmos.DrawWireSphere(pointA.position, perfectTimingWindow);
-            }
         }
     }
 }
