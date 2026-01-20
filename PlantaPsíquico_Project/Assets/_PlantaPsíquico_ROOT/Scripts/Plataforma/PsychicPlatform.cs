@@ -30,7 +30,7 @@ public class PsychicPlatform : MonoBehaviour
     [Range(0.5f, 3f)] public float momentumMultiplier = 1.5f;
 
     [Tooltip("Ventana de tiempo (en segundos) para obtener el boost perfecto")]
-    [Range(0.1f, 1f)] public float perfectTimingWindow = 0.8f;
+    [Range(0.1f, 3f)] public float perfectTimingWindow = 0.8f;
 
     [Tooltip("Boost vertical extra cuando la plataforma sube")]
     [Range(1f, 3f)] public float verticalBoostMultiplier = 2f;
