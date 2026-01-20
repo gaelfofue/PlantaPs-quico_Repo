@@ -15,16 +15,6 @@ public class PsychicPlatform : MonoBehaviour
     [Tooltip("Tiempo que espera en cada punto antes de regresar")]
     public float waitTime = 0.5f;
 
-    [Header("Impulse Motion")]
-    [Tooltip("Curva de aceleración para efecto de impulso")]
-    public AnimationCurve accelerationCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
-
-    [Tooltip("Overshoot: Cuánto sobrepasa el punto antes de regresar")]
-    [Range(0f, 0.5f)] public float overshootAmount = 0.1f;
-
-    [Tooltip("Tiempo del overshoot en segundos")]
-    [Range(0.1f, 1f)] public float overshootDuration = 0.2f;
-
     [Header("Momentum Settings")]
     [Tooltip("Multiplicador de momentum transferido al jugador")]
     [Range(0.5f, 3f)] public float momentumMultiplier = 1.5f;
@@ -42,15 +32,9 @@ public class PsychicPlatform : MonoBehaviour
     [Tooltip("Color normal")]
     public Color normalColor = Color.white;
 
-    private Vector3 _globalPointA;
-    private Vector3 _globalPointB;
-    private Vector3 _nextPosition;
-    private Vector3 _startPosition;
+    private Vector3 nextPosition;
     private bool _isMoving = false;
-    private bool _isOvershooting = false;
     private float _waitTimer = 0f;
-    private float _moveTimer = 0f;
-    private float _totalMoveTime = 1f;
     private Vector3 _previousPosition;
     private Vector3 _velocity;
 
@@ -58,7 +42,6 @@ public class PsychicPlatform : MonoBehaviour
     private bool _isPerfectTimingWindow = false;
 
     private Rigidbody2D _playerRB;
-    private Transform _playerOriginalParent;
 
     private void Awake()
     {
@@ -71,124 +54,47 @@ public class PsychicPlatform : MonoBehaviour
             return;
         }
 
-        // Guardar las posiciones GLOBALES INICIALES
-        _globalPointA = pointA.position;
-        _globalPointB = pointB.position;
-
-        // Calcular tiempo total de movimiento basado en distancia y velocidad
-        float distance = Vector3.Distance(_globalPointA, _globalPointB);
-        _totalMoveTime = distance / moveSpeed;
-
         // Empezar en punto A
-        transform.position = _globalPointA;
-        _nextPosition = _globalPointB;
-        _startPosition = _globalPointA;
+        transform.position = pointA.position;
+        nextPosition = pointB.position;
         _previousPosition = transform.position;
     }
 
     private void Start()
     {
         // Registrar esta plataforma en el manager
-        if (PsychicPlatformManager.Instance != null)
-        {
-            PsychicPlatformManager.Instance.RegisterPlatform(this);
-        }
+        PsychicPlatformManager.Instance?.RegisterPlatform(this);
     }
 
     private void Update()
     {
-        // Calcular velocidad (antes de mover)
-        Vector3 currentPosition = transform.position;
-        _velocity = (currentPosition - _previousPosition) / Time.deltaTime;
-        _previousPosition = currentPosition;
-
-        // Mantener puntos fijos
-        if (pointA != null) pointA.position = _globalPointA;
-        if (pointB != null) pointB.position = _globalPointB;
+        // Calcular velocidad
+        _velocity = (transform.position - _previousPosition) / Time.deltaTime;
+        _previousPosition = transform.position;
 
         if (_isMoving)
         {
-            _moveTimer += Time.deltaTime;
+            // MOVER LA PLATAFORMA (igual que el tutorial)
+            transform.position = Vector3.MoveTowards(transform.position, nextPosition, moveSpeed * Time.deltaTime);
 
-            if (!_isOvershooting)
+            // Calcular si estamos en la ventana de timing perfecto
+            float distanceToTarget = Vector3.Distance(transform.position, nextPosition);
+            _isPerfectTimingWindow = distanceToTarget <= perfectTimingWindow;
+
+            // Feedback visual
+            if (_spriteRenderer != null)
             {
-                // MOVIMIENTO PRINCIPAL con curva de aceleración
-                float t = Mathf.Clamp01(_moveTimer / _totalMoveTime);
-                float curvedT = accelerationCurve.Evaluate(t);
-
-                transform.position = Vector3.Lerp(_startPosition, _nextPosition, curvedT);
-
-                // Calcular distancia para ventana perfecta
-                float totalDistance = Vector3.Distance(_startPosition, _nextPosition);
-                float currentDistance = Vector3.Distance(transform.position, _nextPosition);
-                float normalizedDistance = currentDistance / totalDistance;
-                _isPerfectTimingWindow = normalizedDistance <= 0.3f;
-
-                // Feedback visual
-                if (_spriteRenderer != null)
-                {
-                    _spriteRenderer.color = _isPerfectTimingWindow ? readyColor : normalColor;
-                }
-
-                // Si llegamos al objetivo, iniciar overshoot o terminar
-                if (t >= 1f)
-                {
-                    if (overshootAmount > 0f)
-                    {
-                        _isOvershooting = true;
-                        _moveTimer = 0f;
-                        Vector3 direction = (_nextPosition - _startPosition).normalized;
-                        float distanceAB = Vector3.Distance(_globalPointA, _globalPointB);
-                        Vector3 overshootTarget = _nextPosition + (direction * overshootAmount * distanceAB);
-                        _startPosition = transform.position;
-                        _nextPosition = overshootTarget;
-                    }
-                    else
-                    {
-                        // Sin overshoot, terminar movimiento
-                        _isMoving = false;
-                        _waitTimer = waitTime;
-
-                        // Preparar siguiente movimiento
-                        _nextPosition = (_nextPosition == _globalPointA) ? _globalPointB : _globalPointA;
-                        _startPosition = transform.position;
-                    }
-                }
+                _spriteRenderer.color = _isPerfectTimingWindow ? readyColor : normalColor;
             }
-            else
+
+            // Si llegamos al objetivo
+            if (transform.position == nextPosition)
             {
-                // FASE DE OVERSHOOT (rebote/sobrepaso)
-                float t = Mathf.Clamp01(_moveTimer / overshootDuration);
+                _isMoving = false;
+                _waitTimer = waitTime;
 
-                // Curva suave para el overshoot
-                float overshootT = t * t * (3f - 2f * t); // SmoothStep manual
-
-                transform.position = Vector3.Lerp(_startPosition, _nextPosition, overshootT);
-
-                // Si terminó el overshoot, regresar al punto real
-                if (t >= 1f)
-                {
-                    _isOvershooting = false;
-                    _isMoving = false;
-                    _waitTimer = waitTime;
-
-                    // Determinar punto objetivo real
-                    Vector3 realTarget;
-                    if (Vector3.Distance(transform.position, _globalPointA) < Vector3.Distance(transform.position, _globalPointB))
-                    {
-                        realTarget = _globalPointA;
-                        _nextPosition = _globalPointB;
-                    }
-                    else
-                    {
-                        realTarget = _globalPointB;
-                        _nextPosition = _globalPointA;
-                    }
-
-                    // Ajustar posición final
-                    transform.position = realTarget;
-                    _startPosition = realTarget;
-                }
+                // Alternar entre A y B
+                nextPosition = (nextPosition == pointA.position) ? pointB.position : pointA.position;
             }
         }
         else
@@ -211,10 +117,7 @@ public class PsychicPlatform : MonoBehaviour
         if (!_isMoving && _waitTimer <= 0)
         {
             _isMoving = true;
-            _moveTimer = 0f;
-            _isOvershooting = false;
-            _startPosition = transform.position;
-            Debug.Log($"Plataforma activada con impulso!");
+            Debug.Log($"Plataforma activada!");
         }
     }
 
@@ -223,11 +126,7 @@ public class PsychicPlatform : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            // Guardar el parent original del jugador
-            _playerOriginalParent = collision.gameObject.transform.parent;
-
-            // Hacer hijo SOLO al jugador
-            collision.gameObject.transform.SetParent(transform);
+            collision.gameObject.transform.parent = transform;
             _playerRB = collision.gameObject.GetComponent<Rigidbody2D>();
             Debug.Log("Jugador subió a la plataforma");
         }
@@ -254,8 +153,7 @@ public class PsychicPlatform : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            // Restaurar el parent original del jugador
-            collision.gameObject.transform.SetParent(_playerOriginalParent);
+            collision.gameObject.transform.parent = null;
             _playerRB = null;
             Debug.Log("Jugador salió de la plataforma");
         }
@@ -263,19 +161,8 @@ public class PsychicPlatform : MonoBehaviour
 
     private void ApplyPerfectTimingBoost(Rigidbody2D playerRB)
     {
-        // Calcular boost basado en la velocidad ACTUAL de la plataforma
+        // Calcular boost basado en la velocidad de la plataforma
         Vector2 boost = _velocity * momentumMultiplier;
-
-        // EXTRA: Añadir boost basado en la dirección de movimiento
-        Vector3 moveDirection = (_nextPosition - _startPosition).normalized;
-
-        // Boost direccional adicional durante el impulso
-        if (_isPerfectTimingWindow && _isMoving)
-        {
-            // Aumentar boost en la dirección del movimiento
-            boost.x += moveDirection.x * moveSpeed * 0.3f;
-            boost.y += moveDirection.y * moveSpeed * 0.3f;
-        }
 
         // Si la plataforma se mueve hacia arriba, dar boost vertical EXTRA
         if (_velocity.y > 0.5f)
@@ -303,54 +190,16 @@ public class PsychicPlatform : MonoBehaviour
     {
         if (pointA != null && pointB != null)
         {
-            // Usar las posiciones globales si estamos en play mode
-            Vector3 displayPointA = Application.isPlaying && _globalPointA != Vector3.zero ? _globalPointA : pointA.position;
-            Vector3 displayPointB = Application.isPlaying && _globalPointB != Vector3.zero ? _globalPointB : pointB.position;
-
             Gizmos.color = Color.green;
-            Gizmos.DrawLine(displayPointA, displayPointB);
-            Gizmos.DrawWireSphere(displayPointA, 0.3f);
-            Gizmos.DrawWireSphere(displayPointB, 0.3f);
-
-            // Dibujar línea de overshoot si está configurado
-            if (overshootAmount > 0f)
-            {
-                Gizmos.color = Color.yellow;
-                Vector3 direction = (displayPointB - displayPointA).normalized;
-                float distanceAB = Vector3.Distance(displayPointA, displayPointB);
-                Vector3 overshootPoint = displayPointB + (direction * overshootAmount * distanceAB);
-                Gizmos.DrawWireSphere(overshootPoint, 0.2f);
-
-                // Dibujar línea punteada manualmente
-                DrawDashedLine(displayPointB, overshootPoint, 0.5f);
-            }
+            Gizmos.DrawLine(pointA.position, pointB.position);
+            Gizmos.DrawWireSphere(pointA.position, 0.3f);
+            Gizmos.DrawWireSphere(pointB.position, 0.3f);
 
             // Dibujar la ventana de timing perfecto
-            if (Application.isPlaying && _isMoving && _isPerfectTimingWindow)
+            if (Application.isPlaying && _isMoving)
             {
-                Gizmos.color = Color.cyan;
+                Gizmos.color = _isPerfectTimingWindow ? Color.cyan : Color.yellow;
                 Gizmos.DrawWireSphere(transform.position, 0.5f);
-            }
-        }
-    }
-
-    // Método auxiliar para dibujar líneas discontinuas
-    private void DrawDashedLine(Vector3 start, Vector3 end, float dashLength)
-    {
-        Vector3 direction = (end - start).normalized;
-        float distance = Vector3.Distance(start, end);
-        int segments = Mathf.FloorToInt(distance / dashLength);
-
-        for (int i = 0; i < segments; i += 2)
-        {
-            float startOffset = i * dashLength;
-            float endOffset = Mathf.Min((i + 1) * dashLength, distance);
-
-            if (startOffset < distance)
-            {
-                Vector3 dashStart = start + direction * startOffset;
-                Vector3 dashEnd = start + direction * endOffset;
-                Gizmos.DrawLine(dashStart, dashEnd);
             }
         }
     }
@@ -363,8 +212,7 @@ public class PsychicPlatform : MonoBehaviour
             Gizmos.color = new Color(0, 1, 1, 0.3f); // Cyan transparente
 
             // Dibujar esfera en el punto B mostrando la ventana
-            Vector3 displayPointB = Application.isPlaying && _globalPointB != Vector3.zero ? _globalPointB : pointB.position;
-            Gizmos.DrawWireSphere(displayPointB, perfectTimingWindow);
+            Gizmos.DrawWireSphere(pointB.position, perfectTimingWindow);
         }
     }
 }
