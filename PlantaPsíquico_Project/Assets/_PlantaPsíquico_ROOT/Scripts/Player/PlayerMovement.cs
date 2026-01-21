@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
 
     #region COMPONENTS
     public Rigidbody2D RB { get; private set; }
-    public Animator Animator { get; private set; }
+    private Animator _animator;
     #endregion
 
     #region STATE PARAMETERS
@@ -16,27 +16,17 @@ public class PlayerMovement : MonoBehaviour
     public bool IsWallJumping { get; private set; }
     public bool IsSliding { get; private set; }
 
-    // Timers
     public float LastOnGroundTime { get; private set; }
     public float LastOnWallTime { get; private set; }
     public float LastOnWallRightTime { get; private set; }
     public float LastOnWallLeftTime { get; private set; }
 
-    // Jump
     private bool _isJumpCut;
     private bool _isJumpFalling;
-
-    // Wall Jump
     private float _wallJumpStartTime;
     private int _lastWallJumpDir;
-
-    // Psychic Power (reemplaza al Dash)
     private bool _hasPsychicCharge;
     private bool _psychicRecharging;
-
-    // Animation States
-    private string _currentState;
-    private bool _isLanding;
     #endregion
 
     #region INPUT PARAMETERS
@@ -60,19 +50,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask _groundLayer;
     #endregion
 
-    // Constantes para nombres de animaciones
-    private const string IDLE_ANIM = "Idle";
-    private const string RUN_ANIM = "Run";
-    private const string JUMP_ANIM = "Jump";
-    private const string FALL_ANIM = "Fall";
-    private const string LAND_ANIM = "Land";
-    private const string WALL_SLIDE_ANIM = "WallSlide";
-    private const string PSYCHIC_ANIM = "PsychicPower";
-
     private void Awake()
     {
         RB = GetComponent<Rigidbody2D>();
-        Animator = GetComponent<Animator>();
+        _animator = GetComponent<Animator>();
     }
 
     private void Start()
@@ -80,7 +61,6 @@ public class PlayerMovement : MonoBehaviour
         SetGravityScale(Data.gravityScale);
         IsFacingRight = true;
         _hasPsychicCharge = true;
-        _currentState = IDLE_ANIM;
     }
 
     private void Update()
@@ -101,41 +81,22 @@ public class PlayerMovement : MonoBehaviour
         if (_moveInput.x != 0)
             CheckDirectionToFace(_moveInput.x > 0);
 
-        // Jump Input
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.J))
-        {
             OnJumpInput();
-        }
 
         if (Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.C) || Input.GetKeyUp(KeyCode.J))
-        {
             OnJumpUpInput();
-        }
 
-        // Psychic Power Input
         if (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.K))
-        {
             OnPsychicInput();
-        }
         #endregion
 
         #region COLLISION CHECKS
         if (!IsJumping)
         {
-            // Ground Check
             if (Physics2D.OverlapBox(_groundCheckPoint.position, _groundCheckSize, 0, _groundLayer))
-            {
-                if (LastOnGroundTime < -0.1f && !_isLanding)
-                {
-                    // Aterrizaje
-                    _isLanding = true;
-                    ChangeAnimationState(LAND_ANIM);
-                    StartCoroutine(ResetLanding());
-                }
                 LastOnGroundTime = Data.coyoteTime;
-            }
 
-            // Wall Checks
             if (((Physics2D.OverlapBox(_frontWallCheckPoint.position, _wallCheckSize, 0, _groundLayer) && IsFacingRight)
                     || (Physics2D.OverlapBox(_backWallCheckPoint.position, _wallCheckSize, 0, _groundLayer) && !IsFacingRight)) && !IsWallJumping)
                 LastOnWallRightTime = Data.coyoteTime;
@@ -156,9 +117,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         if (IsWallJumping && Time.time - _wallJumpStartTime > Data.wallJumpTime)
-        {
             IsWallJumping = false;
-        }
 
         if (LastOnGroundTime > 0 && !IsJumping && !IsWallJumping)
         {
@@ -166,7 +125,6 @@ public class PlayerMovement : MonoBehaviour
             _isJumpFalling = false;
         }
 
-        // Jump
         if (CanJump() && LastPressedJumpTime > 0)
         {
             IsJumping = true;
@@ -174,9 +132,7 @@ public class PlayerMovement : MonoBehaviour
             _isJumpCut = false;
             _isJumpFalling = false;
             Jump();
-            ChangeAnimationState(JUMP_ANIM);
         }
-        // Wall Jump
         else if (CanWallJump() && LastPressedJumpTime > 0)
         {
             IsWallJumping = true;
@@ -186,7 +142,6 @@ public class PlayerMovement : MonoBehaviour
             _wallJumpStartTime = Time.time;
             _lastWallJumpDir = (LastOnWallRightTime > 0) ? -1 : 1;
             WallJump(_lastWallJumpDir);
-            ChangeAnimationState(JUMP_ANIM);
         }
         #endregion
 
@@ -194,7 +149,6 @@ public class PlayerMovement : MonoBehaviour
         if (CanUsePsychicPower() && LastPressedPsychicTime > 0)
         {
             UsePsychicPower();
-            ChangeAnimationState(PSYCHIC_ANIM);
         }
         #endregion
 
@@ -205,8 +159,8 @@ public class PlayerMovement : MonoBehaviour
             IsSliding = false;
         #endregion
 
-        #region ANIMATION UPDATE
-        UpdateAnimationState();
+        #region ANIMACIONES (SIMPLE)
+        UpdateAnimations();
         #endregion
 
         #region GRAVITY
@@ -240,94 +194,41 @@ public class PlayerMovement : MonoBehaviour
         #endregion
     }
 
-    private void UpdateAnimationState()
+    // ============================================
+    // ANIMACIONES SUPER SIMPLES (3 L蚇EAS)
+    // ============================================
+    private void UpdateAnimations()
     {
-        // Si estamos en una animaci贸n que no debe ser interrumpida, salir
-        if (_currentState == LAND_ANIM || _currentState == PSYCHIC_ANIM)
-            return;
+        if (_animator == null) return;
 
-        // Determinamos la animaci贸n basada en el estado actual
-        string newState = IDLE_ANIM;
-
-        if (IsSliding)
-        {
-            newState = WALL_SLIDE_ANIM;
-        }
-        else if (LastOnGroundTime > 0)
-        {
-            // En el suelo
-            if (Mathf.Abs(_moveInput.x) > 0.1f)
-                newState = RUN_ANIM;
-            else
-                newState = IDLE_ANIM;
-        }
-        else
-        {
-            // En el aire
-            if (RB.linearVelocity.y > 0.1f)
-                newState = JUMP_ANIM;
-            else if (RB.linearVelocity.y < -0.1f)
-                newState = FALL_ANIM;
-        }
-
-        // Cambiar animaci贸n si es diferente a la actual
-        ChangeAnimationState(newState);
-    }
-
-    private void ChangeAnimationState(string newState)
-    {
-        // Evita que la misma animaci贸n se interrumpa a s铆 misma
-        if (_currentState == newState) return;
-
-        // Reproduce la animaci贸n
-        Animator.Play(newState);
-
-        // Reasigna el estado actual
-        _currentState = newState;
-    }
-
-    private IEnumerator ResetLanding()
-    {
-        yield return new WaitForSeconds(0.1f); // Tiempo de animaci贸n de aterrizaje
-        _isLanding = false;
+        _animator.SetFloat("Speed", Mathf.Abs(RB.linearVelocity.x));
+        _animator.SetFloat("VelocityY", RB.linearVelocity.y);
+        _animator.SetBool("OnWall", IsSliding);
     }
 
     private void FixedUpdate()
     {
-        // Movimiento
         if (IsWallJumping)
             Run(Data.wallJumpRunLerp);
         else
             Run(1);
 
-        // Deslizamiento en pared
         if (IsSliding)
             Slide();
     }
 
     #region INPUT CALLBACKS
-    public void OnJumpInput()
-    {
-        LastPressedJumpTime = Data.jumpInputBufferTime;
-    }
-
+    public void OnJumpInput() => LastPressedJumpTime = Data.jumpInputBufferTime;
     public void OnJumpUpInput()
     {
         if (CanJumpCut() || CanWallJumpCut())
             _isJumpCut = true;
     }
-
-    public void OnPsychicInput()
-    {
-        LastPressedPsychicTime = Data.psychicInputBufferTime;
-    }
+    public void OnPsychicInput() => LastPressedPsychicTime = Data.psychicInputBufferTime;
     #endregion
 
     #region GENERAL METHODS
-    public void SetGravityScale(float scale)
-    {
-        RB.gravityScale = scale;
-    }
+    public void SetGravityScale(float scale) => RB.gravityScale = scale;
     #endregion
 
     #region RUN METHODS
@@ -349,9 +250,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         if (Data.doConserveMomentum && Mathf.Abs(RB.linearVelocity.x) > Mathf.Abs(targetSpeed) && Mathf.Sign(RB.linearVelocity.x) == Mathf.Sign(targetSpeed) && Mathf.Abs(targetSpeed) > 0.01f && LastOnGroundTime < 0)
-        {
             accelRate = 0;
-        }
 
         float speedDif = targetSpeed - RB.linearVelocity.x;
         float movement = speedDif * accelRate;
@@ -407,24 +306,9 @@ public class PlayerMovement : MonoBehaviour
         _hasPsychicCharge = false;
 
         if (PsychicPlatformManager.Instance != null)
-        {
             PsychicPlatformManager.Instance.ActivateAllPlatforms();
-        }
-        else
-        {
-            Debug.LogWarning("No hay PsychicPlatformManager en la escena!");
-        }
 
-        Debug.Log("隆Poder Ps铆quico Activado!");
-
-        // Iniciar recarga despu茅s de usar el poder
-        StartCoroutine(ResetPsychicAnimation());
-    }
-
-    private IEnumerator ResetPsychicAnimation()
-    {
-        yield return new WaitForSeconds(0.5f); // Duraci贸n aproximada de la animaci贸n
-        _currentState = ""; // Resetear para permitir transiciones
+        Debug.Log("oder Ps韖uico Activado!");
     }
     #endregion
 
@@ -432,9 +316,7 @@ public class PlayerMovement : MonoBehaviour
     private void Slide()
     {
         if (RB.linearVelocity.y > 0)
-        {
             RB.AddForce(-RB.linearVelocity.y * Vector2.up, ForceMode2D.Impulse);
-        }
 
         float speedDif = Data.slideSpeed - RB.linearVelocity.y;
         float movement = speedDif * Data.slideAccel;
@@ -450,53 +332,25 @@ public class PlayerMovement : MonoBehaviour
             Turn();
     }
 
-    private bool CanJump()
-    {
-        return LastOnGroundTime > 0 && !IsJumping;
-    }
-
-    private bool CanWallJump()
-    {
-        return LastPressedJumpTime > 0 && LastOnWallTime > 0 && LastOnGroundTime <= 0 && (!IsWallJumping ||
-             (LastOnWallRightTime > 0 && _lastWallJumpDir == 1) || (LastOnWallLeftTime > 0 && _lastWallJumpDir == -1));
-    }
-
-    private bool CanJumpCut()
-    {
-        return IsJumping && RB.linearVelocity.y > 0;
-    }
-
-    private bool CanWallJumpCut()
-    {
-        return IsWallJumping && RB.linearVelocity.y > 0;
-    }
-
+    private bool CanJump() => LastOnGroundTime > 0 && !IsJumping;
+    private bool CanWallJump() => LastPressedJumpTime > 0 && LastOnWallTime > 0 && LastOnGroundTime <= 0 && (!IsWallJumping ||
+         (LastOnWallRightTime > 0 && _lastWallJumpDir == 1) || (LastOnWallLeftTime > 0 && _lastWallJumpDir == -1));
+    private bool CanJumpCut() => IsJumping && RB.linearVelocity.y > 0;
+    private bool CanWallJumpCut() => IsWallJumping && RB.linearVelocity.y > 0;
     private bool CanUsePsychicPower()
     {
         if (!_hasPsychicCharge && LastOnGroundTime > 0 && !_psychicRecharging)
-        {
             StartCoroutine(RechargePsychicPower());
-        }
-
         return _hasPsychicCharge;
     }
-
     private IEnumerator RechargePsychicPower()
     {
         _psychicRecharging = true;
         yield return new WaitForSeconds(Data.psychicRechargeTime);
         _hasPsychicCharge = true;
         _psychicRecharging = false;
-        Debug.Log("隆Poder Ps铆quico Recargado!");
     }
-
-    public bool CanSlide()
-    {
-        if (LastOnWallTime > 0 && !IsJumping && !IsWallJumping && LastOnGroundTime <= 0)
-            return true;
-        else
-            return false;
-    }
+    public bool CanSlide() => LastOnWallTime > 0 && !IsJumping && !IsWallJumping && LastOnGroundTime <= 0;
     #endregion
 
     #region EDITOR METHODS
