@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     #region COMPONENTS
     public Rigidbody2D RB { get; private set; }
     private Animator _animator;
+    public ParticleSystem dust;
     #endregion
 
     #region STATE PARAMETERS
@@ -259,6 +260,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Turn()
     {
+        
         Vector3 scale = transform.localScale;
         scale.x *= -1;
         transform.localScale = scale;
@@ -269,6 +271,7 @@ public class PlayerMovement : MonoBehaviour
     #region JUMP METHODS
     private void Jump()
     {
+        CreateDust();
         LastPressedJumpTime = 0;
         LastOnGroundTime = 0;
 
@@ -368,6 +371,14 @@ public class PlayerMovement : MonoBehaviour
             Gizmos.DrawWireCube(_frontWallCheckPoint.position, _wallCheckSize);
             Gizmos.DrawWireCube(_backWallCheckPoint.position, _wallCheckSize);
         }
+    }
+    #endregion
+
+    #region PARTICLE SYSTEM
+
+    void CreateDust()
+    {
+        dust.Play();
     }
     #endregion
 }
