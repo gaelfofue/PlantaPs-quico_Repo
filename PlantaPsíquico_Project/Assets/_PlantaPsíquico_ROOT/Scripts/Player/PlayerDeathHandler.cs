@@ -30,6 +30,7 @@ public class PlayerDeathHandler : MonoBehaviour
         if (isDead) return;
 
         isDead = true;
+        //Create deathParticles
 
         // Desactivar movimiento
         if (playerMovement != null)
@@ -49,10 +50,6 @@ public class PlayerDeathHandler : MonoBehaviour
         // Desactivar collider
         if (playerCollider != null)
             playerCollider.enabled = false;
-
-        // Efectos
-        if (deathParticles != null)
-            Instantiate(deathParticles, transform.position, Quaternion.identity);
 
         if (deathSound != null)
             AudioSource.PlayClipAtPoint(deathSound, transform.position);
@@ -93,4 +90,10 @@ public class PlayerDeathHandler : MonoBehaviour
     {
         currentCheckpoint = checkpoint;
     }
+
+    void CreateDeathParticles()
+    {
+        deathParticles.Play();
+    }
+
 }
