@@ -195,9 +195,8 @@ public class PlayerMovement : MonoBehaviour
         #endregion
     }
 
-    // ============================================
     // ANIMACIONES SUPER SIMPLES (3 LÍNEAS)
-    // ============================================
+    
     private void UpdateAnimations()
     {
         if (_animator == null) return;
