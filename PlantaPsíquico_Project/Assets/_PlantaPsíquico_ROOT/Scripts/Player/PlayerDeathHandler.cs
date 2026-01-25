@@ -28,6 +28,7 @@ public class PlayerDeathHandler : MonoBehaviour
     public void InstantDeath()
     {
         if (isDead) return;
+        AudioManager.Instance.PlaySFX(0);
 
         isDead = true;
         //Create deathParticles
