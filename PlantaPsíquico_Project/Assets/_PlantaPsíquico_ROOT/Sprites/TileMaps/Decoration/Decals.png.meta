@@ -205,7 +205,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -219,7 +219,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 8
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -243,7 +243,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -310,12 +310,12 @@ TextureImporter:
       name: Decals_0
       rect:
         serializedVersion: 2
-        x: 8
-        y: 111
-        width: 24
-        height: 82
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 9
+        y: 112
+        width: 22
+        height: 80
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -332,12 +332,12 @@ TextureImporter:
       name: Decals_1
       rect:
         serializedVersion: 2
-        x: 35
-        y: 111
-        width: 18
-        height: 72
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 36
+        y: 112
+        width: 16
+        height: 70
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -354,12 +354,12 @@ TextureImporter:
       name: Decals_2
       rect:
         serializedVersion: 2
-        x: 59
-        y: 111
-        width: 18
-        height: 72
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 60
+        y: 112
+        width: 16
+        height: 70
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -376,12 +376,12 @@ TextureImporter:
       name: Decals_3
       rect:
         serializedVersion: 2
-        x: 79
-        y: 127
+        x: 99
+        y: 112
         width: 10
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 42
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -398,12 +398,12 @@ TextureImporter:
       name: Decals_4
       rect:
         serializedVersion: 2
-        x: 98
-        y: 111
-        width: 12
-        height: 44
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 115
+        y: 112
+        width: 26
+        height: 42
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -420,12 +420,12 @@ TextureImporter:
       name: Decals_5
       rect:
         serializedVersion: 2
-        x: 114
-        y: 111
-        width: 28
-        height: 44
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 145
+        y: 112
+        width: 30
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -442,12 +442,12 @@ TextureImporter:
       name: Decals_6
       rect:
         serializedVersion: 2
-        x: 144
-        y: 111
-        width: 32
-        height: 50
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 177
+        y: 112
+        width: 30
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -464,12 +464,12 @@ TextureImporter:
       name: Decals_7
       rect:
         serializedVersion: 2
-        x: 176
-        y: 111
-        width: 32
-        height: 50
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 212
+        y: 112
+        width: 18
+        height: 43
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -486,12 +486,12 @@ TextureImporter:
       name: Decals_8
       rect:
         serializedVersion: 2
-        x: 211
-        y: 111
-        width: 20
-        height: 45
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 232
+        y: 136
+        width: 11
+        height: 20
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -508,12 +508,12 @@ TextureImporter:
       name: Decals_9
       rect:
         serializedVersion: 2
-        x: 231
-        y: 135
-        width: 13
-        height: 22
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 249
+        y: 144
+        width: 12
+        height: 8
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -530,12 +530,12 @@ TextureImporter:
       name: Decals_10
       rect:
         serializedVersion: 2
-        x: 248
-        y: 143
-        width: 14
-        height: 10
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 266
+        y: 112
+        width: 12
+        height: 40
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -552,12 +552,12 @@ TextureImporter:
       name: Decals_11
       rect:
         serializedVersion: 2
-        x: 265
-        y: 111
-        width: 14
-        height: 42
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 299
+        y: 112
+        width: 11
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -574,12 +574,12 @@ TextureImporter:
       name: Decals_12
       rect:
         serializedVersion: 2
-        x: 298
-        y: 111
-        width: 13
-        height: 50
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 314
+        y: 112
+        width: 14
+        height: 38
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -596,12 +596,12 @@ TextureImporter:
       name: Decals_13
       rect:
         serializedVersion: 2
-        x: 313
-        y: 111
-        width: 16
-        height: 40
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 80
+        y: 128
+        width: 8
+        height: 14
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -618,12 +618,12 @@ TextureImporter:
       name: Decals_14
       rect:
         serializedVersion: 2
-        x: 79
-        y: 111
-        width: 10
-        height: 13
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 232
+        y: 112
+        width: 12
+        height: 18
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -640,12 +640,12 @@ TextureImporter:
       name: Decals_15
       rect:
         serializedVersion: 2
-        x: 88
-        y: 111
-        width: 8
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 250
+        y: 112
+        width: 12
+        height: 23
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -662,12 +662,12 @@ TextureImporter:
       name: Decals_16
       rect:
         serializedVersion: 2
-        x: 231
-        y: 111
-        width: 14
-        height: 20
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 369
+        y: 112
+        width: 22
+        height: 17
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -684,12 +684,12 @@ TextureImporter:
       name: Decals_17
       rect:
         serializedVersion: 2
-        x: 249
-        y: 111
-        width: 14
-        height: 25
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 80
+        y: 112
+        width: 8
+        height: 11
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -706,12 +706,12 @@ TextureImporter:
       name: Decals_18
       rect:
         serializedVersion: 2
-        x: 331
-        y: 111
-        width: 11
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 89
+        y: 112
+        width: 6
+        height: 10
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -728,12 +728,12 @@ TextureImporter:
       name: Decals_19
       rect:
         serializedVersion: 2
-        x: 344
-        y: 111
-        width: 16
-        height: 11
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 332
+        y: 112
+        width: 9
+        height: 6
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -750,12 +750,12 @@ TextureImporter:
       name: Decals_20
       rect:
         serializedVersion: 2
-        x: 361
-        y: 111
-        width: 7
-        height: 7
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 345
+        y: 112
+        width: 14
+        height: 9
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -772,12 +772,12 @@ TextureImporter:
       name: Decals_21
       rect:
         serializedVersion: 2
-        x: 368
-        y: 111
-        width: 24
-        height: 19
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 362
+        y: 112
+        width: 5
+        height: 5
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -794,12 +794,12 @@ TextureImporter:
       name: Decals_22
       rect:
         serializedVersion: 2
-        x: 7
-        y: 55
-        width: 50
-        height: 50
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 8
+        y: 56
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -816,12 +816,12 @@ TextureImporter:
       name: Decals_23
       rect:
         serializedVersion: 2
-        x: 65
-        y: 87
-        width: 14
-        height: 13
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 66
+        y: 88
+        width: 12
+        height: 11
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -838,12 +838,12 @@ TextureImporter:
       name: Decals_24
       rect:
         serializedVersion: 2
-        x: 81
-        y: 87
-        width: 14
-        height: 10
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 82
+        y: 88
+        width: 12
+        height: 8
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -860,12 +860,12 @@ TextureImporter:
       name: Decals_25
       rect:
         serializedVersion: 2
-        x: 97
-        y: 87
-        width: 15
-        height: 13
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 98
+        y: 88
+        width: 13
+        height: 11
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -882,12 +882,12 @@ TextureImporter:
       name: Decals_26
       rect:
         serializedVersion: 2
-        x: 111
-        y: 87
-        width: 17
-        height: 11
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 112
+        y: 88
+        width: 15
+        height: 9
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -904,12 +904,12 @@ TextureImporter:
       name: Decals_27
       rect:
         serializedVersion: 2
-        x: 127
-        y: 87
-        width: 25
-        height: 13
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 128
+        y: 88
+        width: 23
+        height: 11
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -926,12 +926,12 @@ TextureImporter:
       name: Decals_28
       rect:
         serializedVersion: 2
-        x: 184
-        y: 86
-        width: 9
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 185
+        y: 87
+        width: 7
+        height: 4
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -948,12 +948,12 @@ TextureImporter:
       name: Decals_29
       rect:
         serializedVersion: 2
-        x: 257
-        y: 87
-        width: 20
-        height: 10
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 258
+        y: 88
+        width: 18
+        height: 8
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -970,12 +970,12 @@ TextureImporter:
       name: Decals_30
       rect:
         serializedVersion: 2
-        x: 280
-        y: 87
-        width: 16
-        height: 11
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 281
+        y: 88
+        width: 14
+        height: 9
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -992,12 +992,12 @@ TextureImporter:
       name: Decals_31
       rect:
         serializedVersion: 2
-        x: 298
-        y: 87
-        width: 11
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 299
+        y: 88
+        width: 9
+        height: 6
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1014,12 +1014,12 @@ TextureImporter:
       name: Decals_32
       rect:
         serializedVersion: 2
-        x: 312
-        y: 87
-        width: 7
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 313
+        y: 88
+        width: 5
+        height: 4
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1036,12 +1036,12 @@ TextureImporter:
       name: Decals_33
       rect:
         serializedVersion: 2
-        x: 321
-        y: 87
-        width: 13
-        height: 9
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 322
+        y: 88
+        width: 11
+        height: 7
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1058,12 +1058,12 @@ TextureImporter:
       name: Decals_34
       rect:
         serializedVersion: 2
-        x: 337
-        y: 87
-        width: 39
-        height: 11
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 338
+        y: 88
+        width: 37
+        height: 9
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1080,12 +1080,12 @@ TextureImporter:
       name: Decals_35
       rect:
         serializedVersion: 2
-        x: 65
-        y: 71
-        width: 14
-        height: 13
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 66
+        y: 72
+        width: 12
+        height: 11
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1102,12 +1102,12 @@ TextureImporter:
       name: Decals_36
       rect:
         serializedVersion: 2
-        x: 81
-        y: 71
-        width: 14
-        height: 10
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 82
+        y: 72
+        width: 12
+        height: 8
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1124,12 +1124,12 @@ TextureImporter:
       name: Decals_37
       rect:
         serializedVersion: 2
-        x: 97
-        y: 71
-        width: 15
-        height: 13
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 98
+        y: 72
+        width: 13
+        height: 11
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1146,12 +1146,12 @@ TextureImporter:
       name: Decals_38
       rect:
         serializedVersion: 2
-        x: 111
-        y: 71
-        width: 17
-        height: 11
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 112
+        y: 72
+        width: 15
+        height: 9
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1168,12 +1168,12 @@ TextureImporter:
       name: Decals_39
       rect:
         serializedVersion: 2
-        x: 129
-        y: 71
-        width: 13
-        height: 10
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 130
+        y: 72
+        width: 11
+        height: 8
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1190,12 +1190,12 @@ TextureImporter:
       name: Decals_40
       rect:
         serializedVersion: 2
-        x: 143
-        y: 71
-        width: 18
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 144
+        y: 72
+        width: 16
+        height: 10
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1212,12 +1212,12 @@ TextureImporter:
       name: Decals_41
       rect:
         serializedVersion: 2
-        x: 167
-        y: 78
-        width: 12
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 168
+        y: 79
+        width: 10
+        height: 4
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1234,12 +1234,12 @@ TextureImporter:
       name: Decals_42
       rect:
         serializedVersion: 2
-        x: 191
-        y: 77
-        width: 25
-        height: 9
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 192
+        y: 78
+        width: 23
+        height: 7
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1256,12 +1256,12 @@ TextureImporter:
       name: Decals_43
       rect:
         serializedVersion: 2
-        x: 185
-        y: 69
-        width: 15
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 186
+        y: 70
+        width: 13
+        height: 6
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1278,12 +1278,12 @@ TextureImporter:
       name: Decals_44
       rect:
         serializedVersion: 2
-        x: 203
-        y: 61
-        width: 11
-        height: 9
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 216
+        y: 70
+        width: 16
+        height: 6
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1300,12 +1300,12 @@ TextureImporter:
       name: Decals_45
       rect:
         serializedVersion: 2
-        x: 215
-        y: 69
-        width: 18
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 169
+        y: 63
+        width: 15
+        height: 4
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1322,12 +1322,12 @@ TextureImporter:
       name: Decals_46
       rect:
         serializedVersion: 2
-        x: 168
+        x: 204
         y: 62
-        width: 17
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 9
+        height: 7
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1344,12 +1344,12 @@ TextureImporter:
       name: Decals_47
       rect:
         serializedVersion: 2
-        x: 8
+        x: 9
         y: 0
-        width: 16
-        height: 33
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 14
+        height: 32
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1366,12 +1366,12 @@ TextureImporter:
       name: Decals_48
       rect:
         serializedVersion: 2
-        x: 24
+        x: 25
         y: 0
-        width: 16
-        height: 33
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 14
+        height: 32
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1388,12 +1388,12 @@ TextureImporter:
       name: Decals_49
       rect:
         serializedVersion: 2
-        x: 40
+        x: 41
         y: 0
-        width: 16
-        height: 49
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 14
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1410,12 +1410,12 @@ TextureImporter:
       name: Decals_50
       rect:
         serializedVersion: 2
-        x: 56
+        x: 57
         y: 0
-        width: 16
-        height: 49
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 14
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1432,12 +1432,12 @@ TextureImporter:
       name: Decals_51
       rect:
         serializedVersion: 2
-        x: 72
+        x: 73
         y: 0
-        width: 16
-        height: 33
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 14
+        height: 32
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1454,12 +1454,12 @@ TextureImporter:
       name: Decals_52
       rect:
         serializedVersion: 2
-        x: 88
+        x: 89
         y: 0
-        width: 16
-        height: 33
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 14
+        height: 32
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1476,12 +1476,12 @@ TextureImporter:
       name: Decals_53
       rect:
         serializedVersion: 2
-        x: 104
+        x: 105
         y: 0
-        width: 16
-        height: 33
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 14
+        height: 32
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1498,12 +1498,12 @@ TextureImporter:
       name: Decals_54
       rect:
         serializedVersion: 2
-        x: 120
+        x: 121
         y: 0
-        width: 16
-        height: 49
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 14
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1520,12 +1520,12 @@ TextureImporter:
       name: Decals_55
       rect:
         serializedVersion: 2
-        x: 136
+        x: 137
         y: 0
-        width: 16
-        height: 49
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 14
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1542,12 +1542,12 @@ TextureImporter:
       name: Decals_56
       rect:
         serializedVersion: 2
-        x: 152
+        x: 153
         y: 0
-        width: 16
-        height: 33
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 14
+        height: 32
+      alignment: 9
+      pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1564,7 +1564,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 2374e43012118c5439f3edd8d43eb4fe
     internalID: 0
     vertices: []
     indices: 
@@ -1572,7 +1572,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":16.0,"y":16.0},"gridSpriteOffset":{"x":8.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.25},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":9,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       Decals_0: -9018111846463007574
       Decals_1: -5300756708933983464
