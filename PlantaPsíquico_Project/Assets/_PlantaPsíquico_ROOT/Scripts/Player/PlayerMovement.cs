@@ -113,6 +113,7 @@ public class PlayerMovement : MonoBehaviour
         #region JUMP CHECKS
         if (IsJumping && RB.linearVelocity.y < 0)
         {
+            AudioManager.Instance.PlaySFX(1);
             IsJumping = false;
             _isJumpFalling = true;
         }
@@ -195,7 +196,7 @@ public class PlayerMovement : MonoBehaviour
         #endregion
     }
 
-    // ANIMACIONES SUPER SIMPLES (3 LÍNEAS)
+    // ANIMACIONES SUPER SIMPLES (3 Lï¿½NEAS)
     
     private void UpdateAnimations()
     {
@@ -310,7 +311,7 @@ public class PlayerMovement : MonoBehaviour
         if (PsychicPlatformManager.Instance != null)
             PsychicPlatformManager.Instance.ActivateAllPlatforms();
 
-        Debug.Log("¡Poder Psíquico Activado!");
+        Debug.Log("ï¿½Poder Psï¿½quico Activado!");
     }
     #endregion
 

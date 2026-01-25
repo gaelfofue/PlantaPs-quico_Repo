@@ -16,10 +16,10 @@ public class PsychicPlatform : MonoBehaviour
     public float waitTime = 0.5f;
 
     [Header("Animation")]
-    [Tooltip("Curva de aceleración para efecto de impulso (Ease In/Out)")]
+    [Tooltip("Curva de aceleraciï¿½n para efecto de impulso (Ease In/Out)")]
     public AnimationCurve accelerationCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
 
-    [Tooltip("Overshoot: Cuánto sobrepasa el punto antes de regresar (da sensación de peso)")]
+    [Tooltip("Overshoot: Cuï¿½nto sobrepasa el punto antes de regresar (da sensaciï¿½n de peso)")]
     [Range(0f, 0.5f)] public float overshootAmount = 0.1f;
 
     [Tooltip("Tiempo del overshoot en segundos")]
@@ -36,7 +36,7 @@ public class PsychicPlatform : MonoBehaviour
     [Range(1f, 3f)] public float verticalBoostMultiplier = 2f;
 
     [Header("Visual Feedback")]
-    [Tooltip("Color cuando está lista para dar boost")]
+    [Tooltip("Color cuando estï¿½ lista para dar boost")]
     public Color readyColor = Color.cyan;
 
     [Tooltip("Color normal")]
@@ -66,7 +66,7 @@ public class PsychicPlatform : MonoBehaviour
 
         if (pointA == null || pointB == null)
         {
-            Debug.LogError("¡Asigna Point A y Point B en el inspector!");
+            Debug.LogError("ï¿½Asigna Point A y Point B en el inspector!");
             enabled = false;
             return;
         }
@@ -108,7 +108,7 @@ public class PsychicPlatform : MonoBehaviour
 
             if (!_isOvershooting)
             {
-                // === MOVIMIENTO PRINCIPAL con curva de aceleración ===
+                // === MOVIMIENTO PRINCIPAL con curva de aceleraciï¿½n ===
                 float t = Mathf.Clamp01(_moveTimer / _totalMoveTime);
                 float curvedT = accelerationCurve.Evaluate(t);
 
@@ -157,8 +157,8 @@ public class PsychicPlatform : MonoBehaviour
 
                 transform.position = Vector3.Lerp(_startPosition, _nextPosition, overshootT);
 
-                // IMPORTANTE: La ventana perfecta TAMBIÉN aplica durante el overshoot
-                // Esto permite saltar justo DESPUÉS de llegar al punto (como Celeste)
+                // IMPORTANTE: La ventana perfecta TAMBIï¿½N aplica durante el overshoot
+                // Esto permite saltar justo DESPUï¿½S de llegar al punto (como Celeste)
                 _isPerfectTimingWindow = true; // Durante overshoot siempre es ventana perfecta
 
                 if (_spriteRenderer != null)
@@ -166,7 +166,7 @@ public class PsychicPlatform : MonoBehaviour
                     _spriteRenderer.color = readyColor; // Cyan durante overshoot
                 }
 
-                // Si terminó el overshoot
+                // Si terminï¿½ el overshoot
                 if (t >= 1f)
                 {
                     _isOvershooting = false;
@@ -207,12 +207,12 @@ public class PsychicPlatform : MonoBehaviour
             _nextPosition = _globalPointA;
         }
 
-        // Ajustar posición final
+        // Ajustar posiciï¿½n final
         transform.position = realTarget;
         _startPosition = realTarget;
     }
 
-    // Método llamado por el PsychicPlatformManager
+    // Mï¿½todo llamado por el PsychicPlatformManager
     public void Activate()
     {
         if (!_isMoving && _waitTimer <= 0)
@@ -236,7 +236,7 @@ public class PsychicPlatform : MonoBehaviour
             // Hacer hijo SOLO al jugador
             collision.gameObject.transform.SetParent(transform);
             _playerRB = collision.gameObject.GetComponent<Rigidbody2D>();
-            Debug.Log("Jugador subió a la plataforma");
+            Debug.Log("Jugador subiï¿½ a la plataforma");
         }
     }
 
@@ -244,7 +244,7 @@ public class PsychicPlatform : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            // Verificar si el jugador está saltando
+            // Verificar si el jugador estï¿½ saltando
             bool isJumping = Input.GetKeyDown(KeyCode.Space) ||
                            Input.GetKeyDown(KeyCode.C) ||
                            Input.GetKeyDown(KeyCode.J);
@@ -252,7 +252,7 @@ public class PsychicPlatform : MonoBehaviour
             // SIEMPRE dar boost al saltar desde plataforma en movimiento (como Celeste)
             if (isJumping && _isMoving && _playerRB != null)
             {
-                // Si estás en la ventana perfecta, dar boost completo
+                // Si estï¿½s en la ventana perfecta, dar boost completo
                 if (_isPerfectTimingWindow)
                 {
                     ApplyPerfectTimingBoost(_playerRB);
@@ -273,7 +273,7 @@ public class PsychicPlatform : MonoBehaviour
             // Restaurar el parent original del jugador
             collision.gameObject.transform.SetParent(_playerOriginalParent);
             _playerRB = null;
-            Debug.Log("Jugador salió de la plataforma");
+            Debug.Log("Jugador saliï¿½ de la plataforma");
         }
     }
 
@@ -299,13 +299,13 @@ public class PsychicPlatform : MonoBehaviour
             Debug.Log($"Boost Vertical: {boost.y:F2}");
         }
 
-        // APLICAR el boost (reemplazar horizontal, añadir vertical)
+        // APLICAR el boost (reemplazar horizontal, aï¿½adir vertical)
         playerRB.linearVelocity = new Vector2(
             boost.x != 0 ? boost.x : currentPlayerVel.x,
             currentPlayerVel.y + boost.y
         );
 
-        Debug.Log($"¡PERFECT TIMING! Velocidad final: {playerRB.linearVelocity}");
+        Debug.Log($"ï¿½PERFECT TIMING! Velocidad final: {playerRB.linearVelocity}");
     }
 
     private void ApplyReducedBoost(Rigidbody2D playerRB)
@@ -338,7 +338,7 @@ public class PsychicPlatform : MonoBehaviour
         Debug.Log($"Boost reducido aplicado: {playerRB.linearVelocity}");
     }
 
-    // Visualización en el editor
+    // Visualizaciï¿½n en el editor
     private void OnDrawGizmos()
     {
         if (pointA != null && pointB != null)
@@ -352,7 +352,7 @@ public class PsychicPlatform : MonoBehaviour
             Gizmos.DrawWireSphere(displayPointA, 0.3f);
             Gizmos.DrawWireSphere(displayPointB, 0.3f);
 
-            // Dibujar línea de overshoot si está configurado
+            // Dibujar lï¿½nea de overshoot si estï¿½ configurado
             if (overshootAmount > 0f)
             {
                 Gizmos.color = Color.yellow;

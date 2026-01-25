@@ -5,7 +5,6 @@ public class PlayerDeathHandler : MonoBehaviour
     [Header("Death Settings")]
     public float respawnDelay = 0.2f;
     public ParticleSystem deathParticles;
-    public AudioClip deathSound;
     public Transform currentCheckpoint;
 
     private PlayerMovement playerMovement;
@@ -24,9 +23,10 @@ public class PlayerDeathHandler : MonoBehaviour
         originalSpawn = transform.position;
     }
 
-    // Método que llamarán los pinchos
+    // Mï¿½todo que llamarï¿½n los pinchos
     public void InstantDeath()
     {
+        AudioManager.Instance.PlaySFX(0);
         if (isDead) return;
 
         isDead = true;
@@ -36,7 +36,7 @@ public class PlayerDeathHandler : MonoBehaviour
         if (playerMovement != null)
             playerMovement.enabled = false;
 
-        // Detener física
+        // Detener fï¿½sica
         if (rb != null)
         {
             rb.linearVelocity = Vector2.zero;
@@ -51,16 +51,15 @@ public class PlayerDeathHandler : MonoBehaviour
         if (playerCollider != null)
             playerCollider.enabled = false;
 
-        if (deathSound != null)
-            AudioSource.PlayClipAtPoint(deathSound, transform.position);
+        
 
-        // Respawn después del delay
+        // Respawn despuï¿½s del delay
         Invoke("Respawn", respawnDelay);
     }
 
     private void Respawn()
     {
-        // Posición de respawn
+        // Posiciï¿½n de respawn
         Vector3 respawnPos = currentCheckpoint != null ?
             currentCheckpoint.position : originalSpawn;
 
